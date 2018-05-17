@@ -41,6 +41,8 @@ const (
 
 	LBLabel         = "shipper-lb"
 	LBForProduction = "production"
+
+	RolloutBlockOverrideAnnotation = "shipper.booking.com/block.override"
 )
 
 // +genclient
@@ -173,8 +175,8 @@ type Release struct {
 }
 
 type ReleaseMeta struct {
-	metav1.ObjectMeta              `json:",inline"`
-	Environment ReleaseEnvironment `json:"environment"`
+	metav1.ObjectMeta `json:",inline"`
+	Environment       ReleaseEnvironment `json:"environment"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
@@ -455,4 +457,43 @@ func (ss *StrategyState) UnmarshalJSON(b []byte) error {
 		*ss = StrategyState(s)
 	}
 	return nil
+}
+
+// +genclient
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// RolloutBlock is a flag-object that blocks rollouts.
+type RolloutBlock struct {
+	metav1.TypeMeta   `json:",inline"`
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+
+	Spec   RolloutBlockSpec   `json:"spec"`
+	Status RolloutBlockStatus `json:"status"`
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+type RolloutBlockList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata"`
+
+	Items []RolloutBlock `json:"items"`
+}
+
+type RolloutBlockSpec struct {
+	Message string             `json:"message"`
+	Author  RolloutBlockAuthor `json:"author"`
+}
+
+type RolloutBlockAuthor struct {
+	Name string `json:"name"`
+}
+
+type RolloutBlockStatus struct {
+	Overrides RolloutBlockOverrides `json:"overrides,omitempty"`
+}
+
+type RolloutBlockOverrides struct {
+	Applications []string `json:"applications,omitempty"`
+	Releases     []string `json:"releases,omitempty"`
 }

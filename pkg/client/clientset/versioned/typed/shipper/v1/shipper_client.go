@@ -30,6 +30,7 @@ type ShipperV1Interface interface {
 	ClustersGetter
 	InstallationTargetsGetter
 	ReleasesGetter
+	RolloutBlocksGetter
 	TrafficTargetsGetter
 }
 
@@ -56,6 +57,10 @@ func (c *ShipperV1Client) InstallationTargets(namespace string) InstallationTarg
 
 func (c *ShipperV1Client) Releases(namespace string) ReleaseInterface {
 	return newReleases(c, namespace)
+}
+
+func (c *ShipperV1Client) RolloutBlocks(namespace string) RolloutBlockInterface {
+	return newRolloutBlocks(c, namespace)
 }
 
 func (c *ShipperV1Client) TrafficTargets(namespace string) TrafficTargetInterface {

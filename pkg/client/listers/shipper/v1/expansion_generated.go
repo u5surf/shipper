@@ -54,6 +54,14 @@ type ReleaseListerExpansion interface{}
 // ReleaseNamespaceLister.
 type ReleaseNamespaceListerExpansion interface{}
 
+// RolloutBlockListerExpansion allows custom methods to be added to
+// RolloutBlockLister.
+type RolloutBlockListerExpansion interface{}
+
+// RolloutBlockNamespaceListerExpansion allows custom methods to be added to
+// RolloutBlockNamespaceLister.
+type RolloutBlockNamespaceListerExpansion interface{}
+
 // TrafficTargetListerExpansion allows custom methods to be added to
 // TrafficTargetLister.
 type TrafficTargetListerExpansion interface{}
