@@ -1,0 +1,10 @@
+apiVersion: shipper.booking.com/v1
+kind: RolloutBlock
+metadata:
+  name: dns-outage
+  namespace: shipper-system
+spec:
+  message: DNS issues, troubleshooting in progress
+  author:
+    type: user
+    name: btyler
