@@ -1,0 +1,24 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: shipper
+webhooks:
+- name: admission.shipper.booking.com
+  rules:
+  - apiGroups:
+    - shipper.booking.com
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    - DELETE
+    resources:
+    - applications
+    - releases
+    - rolloutblocks
+  clientConfig:
+    service:
+      namespace: shipper-system
+      name: shipper-admission-controller
+    caBundle: ""
