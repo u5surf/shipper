@@ -232,7 +232,7 @@ type ReleaseEnvironment struct {
 	Values *ChartValues `json:"values"`
 
 	// set of sidecars to inject into the chart on rendering
-	Sidecars []Sidecar `json:"sidecars"`
+	Sidecars []Sidecar `json:"sidecars,omitempty"`
 
 	// requirements for target clusters for the deployment
 	ClusterRequirements ClusterRequirements `json:"clusterRequirements"`
